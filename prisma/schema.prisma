@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model User {
+  id    Int     @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  fullName String @map("full_name")
+  avatar String
+  username String
+  email String  @unique
+  password String
+  refreshToken  String?       @map("refresh_token")
+  role          UserRole
+
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  productName String   @unique @map("product_name")
+  categories  Category[] @relation("ProductToCategory")
+}
+
+model Category {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  categoryName String   @unique @map("category_name")
+  products    Product[] @relation("ProductToCategory") // Mối quan hệ n-n với Product
+}
+
+
+
+enum UserRole {
+  ADMIN
+  NOMAL_USER
+}
