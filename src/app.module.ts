@@ -10,7 +10,13 @@ import { CommentController } from './comment/comment.controller';
 import { CommentModule } from './comment/comment.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, PrismaModule, ConfigModule.forRoot(), CommentModule],
+  imports: [
+    AuthModule,
+    UsersModule,
+    PrismaModule,
+    ConfigModule.forRoot(),
+    CommentModule,
+  ],
   controllers: [AppController, CommentController],
   providers: [AppService, CommentService],
 })

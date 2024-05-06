@@ -12,7 +12,7 @@ export class RolesGuard implements CanActivate {
 
     const user: Claims = request.user;
 
-    if (role === 'NORMAL') return user.role === 'USER';
+    if (role === 'NORMAL') return user.role === 'NOMAL_USER';
 
     if (role === 'ALL') return true;
 

@@ -10,15 +10,16 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createUserDto: RegisterUserDto): Promise<PrismaUser> {
-    const { email, firstName, lastName, password } = createUserDto;
+    const { email, fullName, password, avatar, role, username } = createUserDto;
 
     return await this.prisma.user.create({
       data: {
         email,
-        firstName,
-        lastName,
+        fullName,
+        avatar,
         password,
-        role: 'ADMIN',
+        role,
+        username,
       },
     });
   }
@@ -40,14 +41,10 @@ export class UsersService {
   }
 
   async getAll(query: UserDto) {
-    const { page, size, sortOrder } = query;
-    const skip = (page - 1) * size;
+    const { page, size } = query;
+    // const skip = (page - 1) * size;
     const [userList, count] = await Promise.all([
-      this.prisma.user.findMany({
-        take: +size,
-        skip,
-        orderBy: { id: sortOrder },
-      }),
+      await this.prisma.user.findMany(),
       await this.prisma.user.count(),
     ]);
 

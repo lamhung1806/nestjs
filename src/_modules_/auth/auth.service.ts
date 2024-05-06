@@ -19,7 +19,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
   async signUp(signUpDto: RegisterUserDto) {
-    const { email, firstName, lastName, password, role } = signUpDto;
+    const { email, avatar, fullName, username, password, role } = signUpDto;
 
     const user = await this.userService.findByEmail(email);
     if (user) {
@@ -31,8 +31,9 @@ export class AuthService {
     const sendUser = {
       email,
       password: hash as string,
-      firstName,
-      lastName,
+      avatar,
+      fullName,
+      username,
       role,
     };
 

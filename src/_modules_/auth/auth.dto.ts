@@ -14,13 +14,19 @@ export class SignUpDto {
     description: 'This is a required property',
   })
   @IsNotEmpty()
-  firstName: string;
+  username: string;
 
   @ApiProperty({
     description: 'This is a required property',
   })
   @IsNotEmpty()
-  lastName: string;
+  fullName: string;
+
+  @ApiProperty({
+    description: 'This is a required property',
+  })
+  @IsNotEmpty()
+  avatar: string;
 
   @ApiProperty({
     description: 'This is a required property',
@@ -31,7 +37,7 @@ export class SignUpDto {
   @ApiProperty({
     enum: UserRole,
     description: 'This is a required property',
-    default: UserRole.USER,
+    default: UserRole.NOMAL_USER,
   })
   @IsEnum(UserRole)
   role: UserRole;
