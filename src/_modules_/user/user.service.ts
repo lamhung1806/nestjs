@@ -4,10 +4,15 @@ import { RegisterUserDto } from '../auth/register-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { exclude } from 'src/utils/transform.util';
 import { UserDto } from './user.dto';
+import { MailerService } from '@nestjs-modules/mailer';
+import { email } from './temp';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly mailerService: MailerService,
+  ) {}
 
   async create(createUserDto: RegisterUserDto): Promise<PrismaUser> {
     const { email, fullName, password, avatar, role, username } = createUserDto;
@@ -70,5 +75,15 @@ export class UsersService {
       console.log('error', error);
       return 'Failed to delete user';
     }
+  }
+
+  sendMail() {
+    this.mailerService.sendMail({
+      to: 'trungkien123456k@naver.com',
+      from: 'trungkien123456k@naver.com',
+      subject: 'test mail',
+      text: 'hello',
+      html: email,
+    });
   }
 }

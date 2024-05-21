@@ -1,9 +1,8 @@
-import { Controller, Delete, Get, Param, Query } from '@nestjs/common';
-import { UsersService } from './user.service';
+import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Auth } from 'src/decorators/auth.decorator';
 import { User } from 'src/decorators/user.decorator';
-import { ApiTags } from '@nestjs/swagger';
-import { UserDto } from './user.dto';
+import { UsersService } from './user.service';
 @Controller('user')
 @ApiTags('user')
 export class UsersController {
@@ -21,9 +20,9 @@ export class UsersController {
     return this.userService.deleteById(+id);
   }
 
-  @Get('/all')
-  @Auth('ADMIN')
-  async getAllUser(@Query() query: UserDto) {
-    return this.userService.getAll(query);
+  @Post('/sendMail')
+  // @Auth('ADMIN')
+  async getAllUser() {
+    return this.userService.sendMail();
   }
 }
